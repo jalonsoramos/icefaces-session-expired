@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ice:outputDeclaration doctypeRoot="HTML"
+		doctypePublic="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctypeSystem="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+
+	<f:loadBundle basename="messages" var="msg" />
+	
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		
+		<ice:outputStyle href="/css/styles.css" />
+		<ice:outputStyle href="/xmlhttp/css/rime/rime.css" />
+	</head>
+	
+	<body>
+		<ui:insert name="head">
+			<div id="head">
+				<ice:outputText value="#{msg['head.title']}"/>
+			</div>
+		</ui:insert>
+					
+		<div id="content">
+			<ice:form id="contentForm">
+				<ui:insert name="content" />
+			</ice:form>
+		</div>
+	</body>
+</html>

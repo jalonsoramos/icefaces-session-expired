@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	
+	<display-name>Tutoriales - web</display-name>
+	<description>Tutoriales</description>
+	
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.jspx</param-value>
+	</context-param>
+
+	<!--
+		| ICEfaces parameters
+	-->
+	<context-param>
+		<param-name>com.icesoft.faces.synchronousUpdate</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!--
+		| Facelets parameters
+	-->
+	<context-param>
+		<param-name>facelets.REFRESH_PERIOD</param-name>
+		<param-value>5</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<description>Necesario para el framework de Autentia</description>
+		<param-name>facelets.RESOURCE_RESOLVER</param-name>
+		<param-value>com.autentia.common.util.web.jsf.facelets.TemplateResolver</param-value>
+	</context-param>
+
+	<!--
+		| JSF RI parameters
+	-->
+	<context-param>
+		<description> Set this flag to true, if you want the JavaServer Faces Reference Implementation to validate the XML in
+			your faces-config.xml resources against the DTD. Default value is false. </description>
+		<param-name>com.sun.faces.validateXml</param-name>
+		<param-value>true</param-value>
+	</context-param>
+<!--	<context-param>-->
+<!--		<description>-->
+<!--			Set this flag to true, if you want the JavaServer Faces Reference Implementation to verify that all of the-->
+<!--			application objects you have configured (components, converters, renderers, and validators) can be-->
+<!--			successfully created. Default value is false.-->
+<!--		</description>-->
+<!--		<param-name>com.sun.faces.verifyObjects</param-name>-->
+<!--		<param-value>true</param-value>-->
+<!--	</context-param>-->
+
+	<context-param>
+		<description>Spring configuration file</description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml		
+		</param-value>
+	</context-param>
+	
+	<!-- Configuración de ICEFaces -->
+	<context-param>
+	    <param-name>com.icesoft.faces.connectionTimeout</param-name>
+	    <param-value>3600000</param-value>
+	</context-param>
+	<!-- <context-param>
+	   <param-name>com.icesoft.faces.heartbeatInterval</param-name>
+	   <param-value>5000</param-value>
+	</context-param>
+	<context-param>
+	   <param-name>com.icesoft.faces.heartbeatTimeout</param-name>
+	   <param-value>1800000</param-value>
+	</context-param>
+	<context-param>
+	   <param-name>com.icesoft.faces.heartbeatRetries</param-name>
+	   <param-value>30</param-value>
+	</context-param>
+	<context-param>
+	   <param-name>com.icesoft.faces.connectionLostRedirectURI</param-name>
+	   <param-value>/home</param-value>
+	</context-param>-->
+	
+	
+	<listener>
+		<description>Startup Spring context</description>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Para todas las peticiones de JSF usamos el patrón Open Session In View -->
+	<!--<filter>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+    </filter>-->
+            
+    <!--<filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>     
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>/xmlhttp/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>/block/*</url-pattern>
+    </filter-mapping>  -->  
+    
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<servlet-class>com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+    
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>/xmlhttp/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>/client/xmlhttp/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<url-pattern>/block/*</url-pattern>
+	</servlet-mapping>	
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

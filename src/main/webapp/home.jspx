@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:composition template="/WEB-INF/facelets/template/defaultLayout.jspx" >
+		
+		<ui:define name="content">	
+			<h1><ice:outputText value="#{msg['home.welcome']}"/></h1>
+			
+			<fieldset>
+				<legend>#{msg['home.userData']}</legend>
+				<ice:outputLabel for="userName" value="#{msg['home.userNameLabel']}: "/>
+				<ice:inputText id="userName" value="#{userCtrl.userName}" required="true"/>
+				<ice:message for="userName" errorClass="error"/><br/><br/>				
+				
+				<ice:commandButton value="#{msg['button.accept']}" action="#{userCtrl.accept}"/><br/><br/>	
+				
+				<center><ice:outputConnectionStatus disconnectedLabel="#{msg['message.disconnect']}" /></center>
+			</fieldset>
+			
+			<br />
+			
+			<ice:panelGroup rendered="#{not empty userCtrl.welcomeMessage}">
+				<h2><strong><ice:outputText id="welcomeMessage" value="#{userCtrl.welcomeMessage}" /></strong></h2>
+			</ice:panelGroup>
+		</ui:define>
+		
+	</ui:composition>
+
+</jsp:root>
